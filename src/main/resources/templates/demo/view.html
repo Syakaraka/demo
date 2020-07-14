@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><!--声明为模板而非静态网页,模板语法来自thymeleaf官网-->
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher</title>
+</head>
+<body>
+<!--姓名年龄为动态值，需要用模板引擎语法解决-->
+<!--th为thymeleaf缩写-->
+    <p th:text="${name}"><!--从model中取得值--></p>
+    <p th:text="${age}"><!--从model中取得值--></p>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--xml文件根为mapper，后面为对应mapper名-->
+<mapper namespace="com.nowcoder.community.dao.DiscussPostMapper">
+    <sql id="selectFields">
+        id,user_id,title,content,type,status,create_time,comment_count,score
+    </sql>
+
+    <!--mapper里面写各种标签，每一个对应接口中的方法-->
+    <select id="selectDiscussPosts" resultType="DiscussPost"><!--查询标签，返回类型为User，不用写全路径因为application里写了实现类所在包名-->
+        select <include refid="selectFields"></include>
+        from discuss_post
+        where status!=2<!--status!=2过滤拉黑的帖子-->
+        <if test="userId!=0"><!--若传入的userId不为0则拼入条件-->
+            and user_id=#{userId}
+        </if>
+        order by type desc,create_time desc <!--desc倒序排序-->
+        limit #{offset},#{limit}<!--分页的两个参数，起始行和每页显示行数-->
+    </select>
+
+    <select id="selectDiscussPostRows" resultType="int"><!--查询标签，返回类型为User，不用写全路径因为application里写了实现类所在包名-->
+        select count(id)
+        from discuss_post
+        where status!=2<!--status!=2过滤拉黑的帖子-->
+        <if test="userId!=0"><!--若传入的userId不为0则拼入条件-->
+            and user_id=#{userId}
+        </if>
+
+    </select>
+
+</mapper>
